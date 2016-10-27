@@ -16,34 +16,38 @@ def is_vowel(letter)
 end
 
 def translate (s)
-  letters = s.split''
-  n = 0
-  ile_liter = letters.length
-  if is_vowel(letters[n])
-    letters.push ('ay')
-    letters.join
-  else
-    if (not is_vowel(letters[n])) && is_vowel(letters[n + 1])
-      letters.push(letters[n])
+  more_than_one_word = s.split' '
+  def translate_single_word(s)
+    letters = s.split''
+    n = 0
+    ile_liter = letters.length
+    if is_vowel(letters[n])
       letters.push ('ay')
-      letters.shift
       letters.join
     else
-      while n < ile_liter
-        if not is_vowel(letters[n])
-          letters.push(letters[n])
-        else
-          letters.shift n
-          break
+      if (not is_vowel(letters[n])) && is_vowel(letters[n + 1])
+        letters.push(letters[n])
+        letters.push ('ay')
+        letters.shift
+        letters.join
+      else
+        while n < ile_liter
+          if not is_vowel(letters[n])
+            letters.push(letters[n])
+          else
+            letters.shift n
+            break
+          end
+          n = n + 1
         end
-        n = n + 1
+        letters.push ('ay')
+        letters.join
       end
-      letters.push ('ay')
-      letters.join
     end
   end
+  more_than_one_word.map {|word| translate_single_word(word)}.join' '
 end
-puts translate('lpapple')
+puts translate('spapple lpie')
 
 
 
