@@ -1,18 +1,17 @@
 #write your code here
 
-
-=begin
-  moreWords = s.split (' ')
-  puts moreWords
-end
-
-
-translate('wielka dziura')
-=end
-
-
 def is_vowel(letter)
   'aeiouy'.include? letter
+end
+
+def is_qu (letters,n)
+  letters[n] == "q" && letters[n+1] == "u"
+end
+
+def do_when_qu (letters, n)
+  letters.push(letters[n])
+  letters.push(letters[n+1])
+  letters.shift *2
 end
 
 def translate (s)
@@ -23,55 +22,33 @@ def translate (s)
     ile_liter = letters.length
     if is_vowel(letters[n])
       letters.push ('ay')
-      letters.join
     else
       if (not is_vowel(letters[n])) && is_vowel(letters[n + 1])
+        if is_qu(letters, n)
+        do_when_qu(letters, n)
+        letters.push ('ay')
+        else
         letters.push(letters[n])
         letters.push ('ay')
         letters.shift
-        letters.join
+        end
       else
         while n < ile_liter
-          if not is_vowel(letters[n])
-            letters.push(letters[n])
+          if is_qu(letters, 0)
+            do_when_qu(letters, 0)
+          elsif not is_vowel(letters[0])
+            letters.push(letters[0])
+            letters.shift
           else
-            letters.shift n
             break
           end
           n = n + 1
         end
         letters.push ('ay')
-        letters.join
       end
     end
+    letters.join
   end
   more_than_one_word.map {|word| translate_single_word(word)}.join' '
 end
 puts translate('spapple lpie')
-
-
-
-=begin
-def translate (s)
-  letters = s.scan /\w/
-  if letters[0] == 'a' || letters[0] =='i' || letters[0] =='o' || letters[0] =='e'
-    letters.push ('ay')
-    letters.join
-  elsif
-  (letters[0] != 'a' && letters[0] !='i' && letters[0] !='o' && letters[0] !='e') && (letters[1] != 'a' && letters[1] !='i' && letters[1] !='o' && letters[1] !='e')
-    letters.push(letters[0])
-    letters.shift
-    letters.push(letters[0])
-    letters.shift
-    letters.push ('ay')
-    letters.join
-  else
-    letters.push(letters[0])
-    letters.push ('ay')
-    letters.shift
-    letters.join
-  end
-end
-
-puts translate('maaeko')
-=end
