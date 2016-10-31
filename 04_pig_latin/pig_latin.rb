@@ -1,7 +1,7 @@
 #write your code here
 
 def is_vowel(letter)
-  'aeiouy'.include? letter
+  'aeiou'.include? letter
 end
 
 def is_qu (letters,n)
